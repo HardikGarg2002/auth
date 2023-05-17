@@ -21,11 +21,8 @@ app.get("/",(req,res)=>{
 })
 
 
-app.use("/",authRouter);
+app.use("/auth",authRouter);
 // app.use("/signup",authRouter);
-
-
-
 
 
 app.listen(PORT,()=>{

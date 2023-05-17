@@ -1,6 +1,6 @@
 // const User = require("../model/user_model");
 // const mongoose = require("mongoose");
-const {signUp,signIn} = require("../service/authentication")
+const {signUp,signIn,logOut} = require("../service/authentication")
 
 async function signup(user){
 
@@ -8,10 +8,18 @@ async function signup(user){
 
 }
 
-const signin=(user)=>{
+const signin = async (user)=>{
 
-    signIn(user)
+    const token = await signIn(user);
+    console.log(token,654345654345);
+    return token;
+    
 }
 
+async function logout(user){
 
-module.exports = {signup,signin} ;
+    logOut(user);
+ 
+ }
+
+module.exports = {signup,signin,logout} ;

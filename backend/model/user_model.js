@@ -51,6 +51,10 @@ const UserSchema = new mongoose.Schema({
     isActive : {
         type : Boolean,
         default : false
+    },
+    token : {
+        type : String,
+        default : null
     }
 });
 

@@ -13,17 +13,16 @@ async function createUser(user){
 
  async function findUserHash(mail){
     const user = await User.findOne({email : mail}).exec();
-    
+    // console.log(user.token,3085665656);
     return user.password;
     
 }
-async function setActive(email){
-    console.log("set active called");
-    await User.updateOne({email : email} , { $set: { isActive : true } });
+async function setActive(email,a,token ){
+    // console.log("set active called");
+    await User.updateMany({email : email} , { $set: { isActive : a , token : token}} );
+    // await User.updateOne({})
     
 }
-
-
 
 
 module.exports={createUser,findUserHash,setActive};

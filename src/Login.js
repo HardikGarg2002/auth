@@ -16,7 +16,7 @@ from 'mdb-react-ui-kit';
 
 function SignIn() {
   return (
-    <form method = "post" action = "./signin">
+    <form method = "post" action = "http://localhost:5000/signin">
     <MDBContainer fluid >
 
       <MDBCard className='text-black m-5' style={{borderRadius: '25px'}}  >
@@ -27,13 +27,13 @@ function SignIn() {
               <p classNAme="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
 
                 <div className="d-flex flex-row align-items-center mb-4">
-                <MDBInput label='Your Email' id='form2' type='email'/>
+                <MDBInput label='Your Email' id='form2' name="email" type='email'/>
                 <MDBIcon fas icon="envelope me-3" size='lg'/>
                 
               </div>
 
               <div className="d-flex flex-row align-items-center mb-4">
-                <MDBInput label='Password' id='form3' type='password'/>   
+                <MDBInput label='Password' id='form3' name="password" type='password'/>   
                 <MDBIcon fas icon="lock me-3" size='lg'/>
                 
               </div>
