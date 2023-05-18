@@ -46,8 +46,10 @@ create a .env file inside backend folder
 
 Run commands in sequence 
 1. git clone --link
-2. npm start
-3. cd backend
-4. npm i (It will install all the dependencies)
-5. npm start
+2. cd auth
+3. npm i
+4. npm start
+5. cd backend
+6. npm i (It will install all the dependencies)
+7. npm start
 
