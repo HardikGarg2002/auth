@@ -49,6 +49,7 @@ Run commands in sequence
 2. cd auth
 3. npm i
 4. npm start
+(To explore backend of the application)
 5. cd backend
 6. npm i (It will install all the dependencies)
 7. npm start
