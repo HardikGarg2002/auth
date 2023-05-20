@@ -11,18 +11,23 @@ async function createUser(user){
     await newUser.save();
 }
 
- async function findUserHash(mail){
-    const user = await User.findOne({email : mail}).exec();
+async function findUserHash(email){
+    const user = await User.findOne({email : email}).exec();
     // console.log(user.token,3085665656);
     return user.password;
     
-}
+} 
+
 async function setActive(email,a,token ){
     // console.log("set active called");
     await User.updateMany({email : email} , { $set: { isActive : a , token : token}} );
     // await User.updateOne({})
     
 }
+async function getOtp(email){
+    const user = await User.findOne({email : email});
+    return user.otp;
+}
 
 
-module.exports={createUser,findUserHash,setActive};
+module.exports={createUser,setActive,findUserHash,getOtp};

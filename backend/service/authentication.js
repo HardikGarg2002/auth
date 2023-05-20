@@ -1,7 +1,16 @@
 const bcrypt = require("bcrypt");
-const {createUser,findUserHash,setActive} = require("../utils/userDB");
+const {createUser,findUserHash,setActive,getOtp} = require("../utils/userDB");
 const jwt = require("jsonwebtoken");
+const nodemailer= require('nodemailer');
+const User = require("../model/user_model");
 
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "hardikgarg3085@gmail.com",
+      pass: process.env.AUTH_PASS
+    }
+  });
 
 
 function signUp(user){
@@ -16,12 +25,12 @@ function signUp(user){
 async function signIn(user){
     // if(user.password!== user.re_password)  res.send("passwords do not match. Re-enter ur password");
     
-    const hash = await findUserHash(user.email);
     
+    const hash = await findUserHash(user.email);
 
     if(comparePassword(user.password, hash)){
        
-        const token = generateToken();
+        const token = generateToken(user);
         setActive(user.email,true,token);
         
         console.log("password is correct");
@@ -40,8 +49,51 @@ async function comparePassword(a, b) {
     return result;
 }
 
-function generateToken(){
-    return jwt.sign({ foo: 'bar' }, 'shhhhh');
+function generateToken(user){
+
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
 }
 
-module.exports = {signUp,signIn,logOut};
+async function sendOtpViaMail(email,otp){
+    var mailOptions = {
+        from: '"Example Team" <hardikgarg3085@gmail.com>',
+        to: email,
+        subject: 'OTP verification',
+        text: `Hey there, it’s our 5th message sent with Nodemailer ${otp}😉 `,
+        html: `<b>Hey there! </b><br> This is our first message sent with Nodemailer  ${otp}`
+    };
+
+    await transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message sent: %s', info.messageId);
+});
+}
+async function saveOTP(email, otp) {
+    try {
+        console.log(email,otp);
+      await User.updateOne({ email: email }, { $set: { otp: otp } });
+      
+      console.log('OTP saved successfully.');
+    } catch (error) {
+      console.error('Error while saving OTP:', error);
+    }
+  }
+
+  async function verifyOTP(email, otp) {
+    try {
+      console.log(email,otp);
+      const dbotp = await getOtp(email);
+      if(dbotp===otp){
+        console.log('OTP saved successfully.');
+        return true;
+      }
+      else throw new error("otp validation failed")
+      
+    } catch (error) {
+      console.error('Error while validating OTP:', error);
+    }
+  }
+
+module.exports = {signUp,signIn,logOut,sendOtpViaMail,saveOTP,verifyOTP};

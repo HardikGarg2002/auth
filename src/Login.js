@@ -16,7 +16,7 @@ from 'mdb-react-ui-kit';
 
 function SignIn() {
   return (
-    <form method = "post" action = "http://localhost:5000/signin">
+    <form method = "post" action = "http://localhost:5000/auth/signin">
     <MDBContainer fluid >
 
       <MDBCard className='text-black m-5' style={{borderRadius: '25px'}}  >
