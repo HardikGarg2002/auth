@@ -1,5 +1,5 @@
-const User = require("../model/user_model");
-
+// const User = require("../model/user_model");
+const {User} = require("../model/user_model");
 
 async function createUser(user){
     const newUser = new User({
@@ -12,7 +12,7 @@ async function createUser(user){
 }
 
 async function findUserHash(email){
-    const user = await User.findOne({email : email}).exec();
+    const user = await user.findOne({email : email}).exec();
     // console.log(user.token,3085665656);
     return user.password;
     
