@@ -1,0 +1,14 @@
+@url = http://localhost:6097
+
+GET {{url}}
+
+###
+POST {{url}}/auth/signup
+
+{
+    "name":"hardik",
+    "password":"abcdef",
+    "email":"hardikgarg3085@gmail.com",
+    "mobile":"9215503085",
+
+}
