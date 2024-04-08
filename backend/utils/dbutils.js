@@ -1,8 +1,6 @@
-const mongoose = require("mongoose");
-require('dotenv').config();
+import mongoose from "mongoose";
 const initDB = () => {
-
-    console.log("init function called")
+  console.log("init function called");
   mongoose
     .connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
@@ -21,4 +19,4 @@ const disconnectDB = () => {
   console.log("Database disconnected successfully");
 };
 
-module.exports = { initDB, disconnectDB };
+export { initDB, disconnectDB };

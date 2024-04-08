@@ -1,6 +1,6 @@
-const authController = require("../controllers/auth_controller");
+import authController from "../controllers/auth_controller.js";
 
-export async function signup(req, res, next) {
+async function signup(req, res, next) {
   try {
     const { name, email, password } = req.body;
     console.log(name, email, password);
@@ -11,7 +11,7 @@ export async function signup(req, res, next) {
   }
 }
 
-export async function signin(req, res, next) {
+async function signin(req, res, next) {
   try {
     const { email, password } = req.body;
     const token = await authController.signin(req.body);
@@ -20,7 +20,7 @@ export async function signin(req, res, next) {
     next(err);
   }
 }
-export async function logout(req, res, next) {
+async function logout(req, res, next) {
   try {
     const { email, password } = req.body;
     await authController.logout(req.body);
@@ -30,7 +30,7 @@ export async function logout(req, res, next) {
   }
 }
 
-export async function verifyOtp(req, res, next) {
+async function verifyOtp(req, res, next) {
   try {
     const { email, otp } = req.body;
     await authController.verifyOtp(req.body);
@@ -40,7 +40,7 @@ export async function verifyOtp(req, res, next) {
   }
 }
 
-export async function generateOtp(req, res, next) {
+async function generateOtp(req, res, next) {
   try {
     const { email } = req.body;
     const otp = await authController.generateOtp(email);
@@ -50,4 +50,4 @@ export async function generateOtp(req, res, next) {
   }
 }
 
-modules.exports = { signup };
+export default { signup, signin, logout, verifyOtp, generateOtp };

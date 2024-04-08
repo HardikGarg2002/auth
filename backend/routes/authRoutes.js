@@ -1,5 +1,6 @@
+import express from 'express'
 const router = express.Router();
-const authHandler = require("../handler/auth_handler");
+import authHandler from "../handler/auth_handler.js";
 
 router.post("/signup", authHandler.signup);
 
@@ -11,4 +12,4 @@ router.post("/requestOtp", authHandler.generateOtp);
 
 router.route("/verifyOtp").post(authHandler.verifyOtp);
 
-module.exports = router;
+export default router;

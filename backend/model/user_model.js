@@ -1,8 +1,7 @@
-const bcrypt = require("bcrypt");
-const mongoose = require("mongoose");
-const { Schema, model } = require("mongoose");
+import { genSalt, hash } from "bcrypt";
+import { Schema, model } from "mongoose";
 
-const IUserRole = {
+export const IUserRole = {
   USER: "user",
   ADMIN: "admin",
 };
@@ -79,9 +78,8 @@ authUserSchema.pre("save", async function (next) {
 });
 
 const hashPassword = async (password) => {
-  const salt = await bcrypt.genSalt(10);
-  return await bcrypt.hash(password, salt);
+  const salt = await genSalt(10);
+  return await hash(password, salt);
 };
 
-const User = mongoose.model("User", authUserSchema);
-module.exports = { IUserRole, User };
+export const User = model("User", authUserSchema);

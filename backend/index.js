@@ -1,40 +1,31 @@
-const express= require("express");
-const app =express();
-require('dotenv').config();
+import express from "express";
+import { initDB, disconnectDB } from "./utils/dbutils.js";
+import authRouter from "./routes/authRoutes.js";
+import dotenv from "dotenv";
+
+const app = express();
+dotenv.config();
 const PORT = process.env.PORT || 3000;
-const bodyParser = require('body-parser');
-const {initDB,disconnectDB} = require("./utils/dbutils");
 
 initDB();
+app.use(express.json());
+// app.use(urlencoded({ extended: true }));
 
+app.use("/auth", authRouter);
 
-app.use(express.json())
-app.use(bodyParser.urlencoded({ extended: true }));
-
-const authRouter = require('./routes/authRoutes')
-
-
-app.use("/auth",authRouter);
-
-const User = require("./model/user_model");
-app.get("/finduser",async(req,res)=>{
-    const email = req.body.email;
-    const user = await User.findOne({ email: email });
-      console.log(user.otp);
-      res.send(user);
-})
-app.get("/",(req,res)=>{
-    console.log(req.email);
-    res.send("in home page")
-
-})
-
+// app.get("/finduser",async(req,res)=>{
+//     const email = req.body.email;
+//     const user = await findOne({ email: email });
+//       console.log(user.otp);
+//       res.send(user);
+// })
+app.get("/", (req, res) => {
+  console.log(req.email);
+  res.send("in home page");
+});
 
 // app.use("/signup",authRouter);
 
-
-
-app.listen(PORT,()=>{
-        console.log("listening at port " + PORT)
-        
-})
+app.listen(PORT, () => {
+  console.log("listening at port " + PORT);
+});
