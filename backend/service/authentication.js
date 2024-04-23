@@ -19,6 +19,7 @@ const transporter = createTransport({
 
 function signUp(user) {
   // if(user.password!== user.re_password)  res.send("passwords do not match. Re-enter ur password");
+
   bcrypt.hash(user.password, 10, function (err, hash) {
     user.password = hash;
     createUser(user);
@@ -36,7 +37,16 @@ async function signIn(user) {
 
     console.log("password is correct");
     return token;
-  } else console.log("password is in_correct");
+  }
+  //  else throw new BussinessError("password is incorrect");
+}
+async function signUpAndLogin(user) {
+  const isExistingUser = await User.findOne({ email: user.email });
+  if (!isExistingUser) {
+    return signUp(user);
+  }
+  const token = await signIn(user);
+  return token;
 }
 
 async function logOut(user) {

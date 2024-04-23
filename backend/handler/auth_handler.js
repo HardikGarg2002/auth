@@ -2,9 +2,9 @@ import authController from "../controllers/auth_controller.js";
 
 async function signup(req, res, next) {
   try {
-    const { name, email, password } = req.body;
-    console.log(name, email, password);
-    const userId = await authController.signup(req.body);
+    const { email, password } = req.body;
+    console.log(email, password);
+    const userId = await authController.signup(email, password);
     res.status(201).json({ message: "user created successfully", id: userId });
   } catch (err) {
     next(err);

@@ -1,7 +1,8 @@
 import authService from "../service/authentication.js";
 
-async function signup(user) {
-    authService.signUp(user);
+async function signup(email, password) {
+  const user = { email, password };
+  authService.signUp(user);
 }
 
 const signin = async (user) => {
@@ -9,9 +10,13 @@ const signin = async (user) => {
   console.log(token, 654345654345);
   return token;
 };
+async function signupAndLogin(user) {
+  const token = await authService.signUpAndLogin(user);
+  return token;
+}
 
 async function logout(user) {
-    authService.logOut(user);
+  await authService.logOut(user);
 }
 
 async function verifyToken(req, res, next) {
@@ -40,4 +45,12 @@ async function verifyOtp(req, res) {
   res.status("201").send("otp validated");
 }
 
-export default { signup, signin, logout, verifyToken, generateOtp, verifyOtp };
+export default {
+  signup,
+  signin,
+  logout,
+  verifyToken,
+  generateOtp,
+  verifyOtp,
+  signupAndLogin,
+};

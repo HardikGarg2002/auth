@@ -9,7 +9,10 @@ async function createUser(user) {
 
   await newUser.save();
 }
-
+async function getUser(email) {
+  const user = await User.findOne({ email: email }).exec();
+  return user;
+}
 async function findUserHash(email) {
   const user = await User.findOne({ email: email }).exec();
   // console.log(user.token,3085665656);
@@ -29,4 +32,4 @@ async function getOtp(email) {
   return user.otp;
 }
 
-export { createUser, findUserHash, setActive, getOtp };
+export { createUser, findUserHash, setActive, getOtp, getUser };
