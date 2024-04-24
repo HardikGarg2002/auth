@@ -5,9 +5,8 @@ async function signup(email, password) {
   authService.signUp(user);
 }
 
-const signin = async (user) => {
-  const token = await authService.signIn(user);
-  console.log(token, 654345654345);
+const signin = async (email, password) => {
+  const token = await authService.signIn(email, password);
   return token;
 };
 async function signupAndLogin(user) {

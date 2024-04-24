@@ -13,8 +13,7 @@ const authUserSchema = new Schema({
   },
   password: {
     type: String,
-    trim: true,
-    select: false,
+    trim: true
   },
   email: {
     type: String,
@@ -25,7 +24,7 @@ const authUserSchema = new Schema({
     type: String,
     trim: true,
   },
-  is_active: {
+  is_logged_in: {
     type: Boolean,
     default: false,
   },

@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import {
   createUser,
   findUserHash,
-  setActive,
+  loginOrLogout,
   getOtp,
 } from "../utils/userDB.js";
 import jwt from "jsonwebtoken";
@@ -17,23 +17,19 @@ const transporter = createTransport({
   },
 });
 
-function signUp(user) {
-  // if(user.password!== user.re_password)  res.send("passwords do not match. Re-enter ur password");
-
-  bcrypt.hash(user.password, 10, function (err, hash) {
-    user.password = hash;
-    createUser(user);
-  });
+async function signUp(userInput) {
+  const hashedPassword = await bcrypt.hash(userInput.password, 10);
+  userInput.password = hashedPassword;
+  const user = await createUser(userInput);
+  return user._id;
 }
 
-async function signIn(user) {
-  // if(user.password!== user.re_password)  res.send("passwords do not match. Re-enter ur password");
-
-  const hash = await findUserHash(user.email);
-
-  if (comparePassword(user.password, hash)) {
-    const token = generateToken(user);
-    setActive(user.email, true, token);
+async function signIn(email, password) {
+  const hash = await findUserHash(email);
+  console.log(email, password, hash);
+  if (comparePassword(password, hash)) {
+    const token = generateToken({ email, password });
+    await loginOrLogout(email, true, token);
 
     console.log("password is correct");
     return token;
@@ -50,7 +46,7 @@ async function signUpAndLogin(user) {
 }
 
 async function logOut(user) {
-  await setActive(user.email, false, null);
+  await loginOrLogout(user.email, false, null);
 }
 async function comparePassword(a, b) {
   const result = await bcrypt.compare(a, b);

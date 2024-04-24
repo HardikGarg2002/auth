@@ -2,12 +2,11 @@ import { User } from "../model/user_model.js";
 
 async function createUser(user) {
   const newUser = new User({
-    name: user.name,
     email: user.email,
     password: user.password,
   });
 
-  await newUser.save();
+  return await newUser.save();
 }
 async function getUser(email) {
   const user = await User.findOne({ email: email }).exec();
@@ -16,14 +15,15 @@ async function getUser(email) {
 async function findUserHash(email) {
   const user = await User.findOne({ email: email }).exec();
   // console.log(user.token,3085665656);
+  console.log(user, "dfsdfsdf");
   return user.password;
 }
 
-async function setActive(email, a, token) {
+async function loginOrLogout(email, loggedIn, token) {
   // console.log("set active called");
-  await User.updateMany(
+  await User.updateOne(
     { email: email },
-    { $set: { isActive: a, token: token } }
+    { $set: { is_logged_in: loggedIn, token: loggedIn ? token : null } }
   );
   // await User.updateOne({})
 }
@@ -32,4 +32,4 @@ async function getOtp(email) {
   return user.otp;
 }
 
-export { createUser, findUserHash, setActive, getOtp, getUser };
+export { createUser, findUserHash, loginOrLogout, getOtp, getUser };

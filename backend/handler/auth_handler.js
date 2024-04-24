@@ -14,7 +14,7 @@ async function signup(req, res, next) {
 async function signin(req, res, next) {
   try {
     const { email, password } = req.body;
-    const token = await authController.signin(req.body);
+    const token = await authController.signin(email, password);
     res.status(201).json({ message: "user logged in succesfully", token });
   } catch (err) {
     next(err);

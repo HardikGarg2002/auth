@@ -1,14 +1,24 @@
 @url = http://localhost:6097
+@id = 66293c7734d95bc2886aad7a
 
 GET {{url}}
 
 ###
 POST {{url}}/auth/signup
+Content-Type: application/json
 
 {
-    "name":"hardik",
     "password":"abcdef",
-    "email":"hardikgarg3085@gmail.com",
-    "mobile":"9215503085",
+    "email":"hardikgarg3085@gmail.com"
+
+}
+
+###
+POST {{url}}/auth/signin
+Content-Type: application/json
+
+{
+    "password":"abcdef",
+    "email":"hardikgarg3085@gmail.com"
 
 }
