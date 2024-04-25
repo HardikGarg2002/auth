@@ -2,7 +2,7 @@ import authService from "../service/authentication.js";
 
 async function signup(email, password) {
   const user = { email, password };
-  authService.signUp(user);
+  await authService.signUp(user);
 }
 
 const signin = async (email, password) => {
@@ -14,8 +14,8 @@ async function signupAndLogin(user) {
   return token;
 }
 
-async function logout(user) {
-  await authService.logOut(user);
+async function logout(email) {
+  await authService.logOut(email);
 }
 
 async function verifyToken(req, res, next) {

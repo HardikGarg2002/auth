@@ -22,8 +22,8 @@ async function signin(req, res, next) {
 }
 async function logout(req, res, next) {
   try {
-    const { email, password } = req.body;
-    await authController.logout(req.body);
+    const { email } = req.body;
+    await authController.logout(email);
     res.status(200).json("user logged out succesfully");
   } catch (err) {
     next(err);

@@ -22,3 +22,13 @@ Content-Type: application/json
     "email":"hardikgarg3085@gmail.com"
 
 }
+
+###
+POST {{url}}/auth/logout
+Content-Type: application/json
+
+{
+    
+    "email":"hardikgarg3085@gmail.com"
+
+}

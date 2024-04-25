@@ -45,8 +45,8 @@ async function signUpAndLogin(user) {
   return token;
 }
 
-async function logOut(user) {
-  await loginOrLogout(user.email, false, null);
+async function logOut(email) {
+  await loginOrLogout(email, false, null);
 }
 async function comparePassword(a, b) {
   const result = await bcrypt.compare(a, b);
