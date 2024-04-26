@@ -2,7 +2,7 @@ import authService from "../service/authentication.js";
 
 async function signup(email, password) {
   const user = { email, password };
-  await authService.signUp(user);
+  return await authService.signUp(user);
 }
 
 const signin = async (email, password) => {

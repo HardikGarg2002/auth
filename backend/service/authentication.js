@@ -4,6 +4,7 @@ import {
   findUserHash,
   loginOrLogout,
   getOtp,
+  getUser,
 } from "../utils/userDB.js";
 import jwt from "jsonwebtoken";
 import { createTransport } from "nodemailer";
@@ -20,8 +21,11 @@ const transporter = createTransport({
 async function signUp(userInput) {
   const hashedPassword = await bcrypt.hash(userInput.password, 10);
   userInput.password = hashedPassword;
-  const user = await createUser(userInput);
-  return user._id;
+  const isExistingUser = await getUser(userInput.email);
+  if (isExistingUser) return isExistingUser._id;
+  const newUser = await createUser(userInput);
+  console.log("new user created");
+  return newUser._id;
 }
 
 async function signIn(email, password) {
