@@ -28,18 +28,25 @@ async function signUp(userInput) {
   return newUser._id;
 }
 
-async function signIn(email, password) {
-  const hash = await findUserHash(email);
-  console.log(email, password, hash);
-  if (comparePassword(password, hash)) {
-    const token = generateToken({ email, password });
-    await loginOrLogout(email, true, token);
-
-    console.log("password is correct");
-    return token;
+async function signInWithPassword(email, password) {
+  const existingUser = await getUser(email);
+  if (existingUser.is_deleted) throw new Error("user is deleted");
+  if (!existingUser.is_verified) throw new Error("user is not verified");
+  if (existingUser.password === null || !existingUser.password)
+    throw new Error("user is not registered with password, try login with otp");
+  console.log(email, password, existingUser.password);
+  if (!comparePassword(password, existingUser.password)) {
+    console.log("password is incorrect");
+    //  else throw new BussinessError("password is incorrect");
   }
-  //  else throw new BussinessError("password is incorrect");
+
+  const token = generateToken(existingUser._id);
+  await loginOrLogout(email, true, token);
+
+  console.log("password is correct");
+  return token;
 }
+
 async function signUpAndLogin(user) {
   const isExistingUser = await User.findOne({ email: user.email });
   if (!isExistingUser) {
@@ -57,8 +64,8 @@ async function comparePassword(a, b) {
   return result;
 }
 
-function generateToken(user) {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+function generateToken(userId) {
+  return jwt.sign(userId, process.env.ACCESS_TOKEN_SECRET);
 }
 
 async function sendOtpViaMail(email, otp) {
@@ -101,4 +108,11 @@ async function verifyOTP(email, otp) {
   }
 }
 
-export default { signUp, signIn, logOut, sendOtpViaMail, saveOTP, verifyOTP };
+export default {
+  signUp,
+  signInWithPassword,
+  logOut,
+  sendOtpViaMail,
+  saveOTP,
+  verifyOTP,
+};

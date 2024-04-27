@@ -1,7 +1,6 @@
 import { User } from "../model/user_model.js";
 
-async function 
-createUser(user) {
+async function createUser(user) {
   const newUser = new User({
     email: user.email,
     password: user.password,
@@ -26,7 +25,6 @@ async function loginOrLogout(email, loggedIn, token) {
     { email: email },
     { $set: { is_logged_in: loggedIn, token: loggedIn ? token : "" } }
   );
-  // await User.updateOne({})
 }
 async function getOtp(email) {
   const user = await User.findOne({ email: email });
