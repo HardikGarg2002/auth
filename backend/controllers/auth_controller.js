@@ -6,7 +6,7 @@ async function signup(email, password) {
 }
 
 const signin = async (email, password) => {
-  const token = await authService.signIn(email, password);
+  const token = await authService.signInWithPassword(email, password);
   return token;
 };
 async function signupAndLogin(user) {
