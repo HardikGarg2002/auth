@@ -1,11 +1,5 @@
 import bcrypt from "bcrypt";
-import {
-  createUser,
-  findUserHash,
-  loginOrLogout,
-  getOtp,
-  getUser,
-} from "../utils/userDB.js";
+import { createUser, loginOrLogout, getOtp, getUser } from "../utils/userDB.js";
 import jwt from "jsonwebtoken";
 import { createTransport } from "nodemailer";
 import { User } from "../model/user_model.js";
@@ -35,9 +29,8 @@ async function signInWithPassword(email, password) {
   if (existingUser.password === null || !existingUser.password)
     throw new Error("user is not registered with password, try login with otp");
   console.log(email, password, existingUser.password);
-  if (!comparePassword(password, existingUser.password)) {
-    console.log("password is incorrect");
-    //  else throw new BussinessError("password is incorrect");
+  if (!(await comparePassword(password, existingUser.password))) {
+    throw new Error("password is incorrect");
   }
 
   const token = generateToken(existingUser._id);
@@ -61,11 +54,12 @@ async function logOut(email) {
 }
 async function comparePassword(a, b) {
   const result = await bcrypt.compare(a, b);
+  console.log("password comparison result:", result);
   return result;
 }
 
 function generateToken(userId) {
-  return jwt.sign(userId, process.env.ACCESS_TOKEN_SECRET);
+  return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET);
 }
 
 async function sendOtpViaMail(email, otp) {

@@ -31,4 +31,4 @@ async function getOtp(email) {
   return user.otp;
 }
 
-export { createUser, findUserHash, loginOrLogout, getOtp, getUser };
+export { createUser, loginOrLogout, getOtp, getUser };
