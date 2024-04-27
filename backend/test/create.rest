@@ -13,22 +13,4 @@ Content-Type: application/json
 
 }
 
-###
-POST {{url}}/auth/signin
-Content-Type: application/json
 
-{
-    "password":"abcdef",
-    "email":"hardikgarg3085@gmail.com"
-
-}
-
-###
-POST {{url}}/auth/logout
-Content-Type: application/json
-
-{
-    
-    "email":"hardikgarg3085@gmail.com"
-
-}

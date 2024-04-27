@@ -1,0 +1,26 @@
+@url = http://localhost:6097
+@id = 66293c236cbfd52dc1912e65
+
+
+
+
+
+###
+POST {{url}}/auth/signin
+Content-Type: application/json
+
+{
+    "password":"abcdef",
+    "email":"hardikgarg3085@gmail.com"
+
+}
+
+###
+POST {{url}}/auth/logout
+Content-Type: application/json
+
+{
+    
+    "email":"hardikgarg3085@gmail.com"
+
+}
