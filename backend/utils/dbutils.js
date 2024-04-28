@@ -35,7 +35,7 @@ const isMongoDBConnected = () => {
 const retryMongoDBConnection = async () => {
   try {
     if (!isMongoDBConnected()) {
-      await initMongoDB();
+      await initDB();
     } else {
       console.log("Mongo Database is already connected");
     }
@@ -49,4 +49,4 @@ const disconnectDB = () => {
   console.log("Database disconnected successfully");
 };
 
-export { initDB, disconnectDB };
+export { initDB, disconnectDB, retryMongoDBConnection };

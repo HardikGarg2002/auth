@@ -8,8 +8,8 @@ router.post("/signin", authHandler.signin);
 
 router.post("/logout", authHandler.logout);
 
-router.post("/requestOtp", authHandler.generateOtp);
+router.get("/requestOtp", authHandler.generateOtp);
 
-router.route("/verifyOtp").post(authHandler.verifyOtp);
+router.post("/verifyOtp", authHandler.verifyOtp);
 
 export default router;
