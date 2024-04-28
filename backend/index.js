@@ -1,6 +1,11 @@
 import express from "express";
-import { initDB, disconnectDB } from "./utils/dbutils.js";
+import {
+  initDB,
+  disconnectDB,
+  retryMongoDBConnection,
+} from "./utils/dbutils.js";
 import authRouter from "./routes/authRoutes.js";
+import mAuthRouter from "./routes/m-auth_routes.js";
 import dotenv from "dotenv";
 
 const app = express();
@@ -11,7 +16,8 @@ initDB();
 app.use(express.json());
 // app.use(urlencoded({ extended: true }));
 
-app.use("/auth", authRouter);
+app.use("/eauth", authRouter);
+app.use("/mauth", mAuthRouter);
 
 // app.get("/finduser",async(req,res)=>{
 //     const email = req.body.email;
@@ -19,6 +25,9 @@ app.use("/auth", authRouter);
 //       console.log(user.otp);
 //       res.send(user);
 // })
+app.post("/connectToDb", async () => {
+  await retryMongoDBConnection();
+});
 app.get("/", (req, res) => {
   console.log(req.email);
   res.send("in home page");
