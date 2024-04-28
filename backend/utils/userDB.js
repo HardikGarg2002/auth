@@ -1,24 +1,13 @@
 import { User } from "../model/user_model.js";
 
 async function createUser(user) {
-  const newUser = new User({
-    email: user.email,
-    password: user.password,
-  });
-
+  const newUser = new User(user);
   return await newUser.save();
 }
-async function getUser(email) {
-  const user = await User.findOne({ email: email }).exec();
+async function getUser(filter) {
+  const user = await User.findOne(filter).exec();
   return user;
 }
-async function findUserHash(email) {
-  const user = await User.findOne({ email: email }).exec();
-  // console.log(user.token,3085665656);
-  console.log(user, "dfsdfsdf");
-  return user.password;
-}
-
 async function loginOrLogout(email, loggedIn, token) {
   // console.log("set active called");
   await User.updateOne(
