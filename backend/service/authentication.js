@@ -13,17 +13,20 @@ const transporter = createTransport({
 });
 
 async function signUp(userInput) {
-  const hashedPassword = await bcrypt.hash(userInput.password, 10);
-  userInput.password = hashedPassword;
-  const isExistingUser = await getUser(userInput.email);
+  userInput.password = await hashPassword(userInput.password);
+
+  const isExistingUser = await getUser({ email: userInput.email });
   if (isExistingUser) return isExistingUser._id;
-  const newUser = await createUser(userInput);
+  const newUser = await createUser({
+    email: userInput.email,
+    password: userInput.password,
+  });
   console.log("new user created");
   return newUser._id;
 }
 
 async function signInWithPassword(email, password) {
-  const existingUser = await getUser(email);
+  const existingUser = await getUser({ email });
   if (existingUser.is_deleted) throw new Error("user is deleted");
   if (!existingUser.is_verified) throw new Error("user is not verified");
   if (existingUser.password === null || !existingUser.password)
@@ -81,7 +84,7 @@ async function sendOtpViaMail(email, otp) {
 async function saveOTP(email, otp) {
   try {
     console.log(email, otp);
-    await User.updateOne({ email: email }, { $set: { otp: otp } });
+    await User.updateOne({ email }, { $set: { otp } });
 
     console.log("OTP saved successfully.");
   } catch (error) {

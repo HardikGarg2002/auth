@@ -10,7 +10,15 @@ async function signup(req, res, next) {
     next(err);
   }
 }
-
+async function otpSignup(req, res, next) {
+  try {
+    const { email, otp } = req.body;
+    const userId = await authController.signup(email, otp);
+    res.status(201).json({ message: "user created successfully", id: userId });
+  } catch (err) {
+    next(err);
+  }
+}
 async function signin(req, res, next) {
   try {
     const { email, password } = req.body;
@@ -20,6 +28,17 @@ async function signin(req, res, next) {
     next(err);
   }
 }
+
+async function otpSignin(req, res, next) {
+  try {
+    const { email, otp } = req.body;
+    const token = await authController.signin(email, otp);
+    res.status(201).json({ message: "user logged in succesfully", token });
+  } catch (err) {
+    next(err);
+  }
+}
+
 async function logout(req, res, next) {
   try {
     const { email } = req.body;

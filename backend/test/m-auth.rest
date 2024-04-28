@@ -13,4 +13,10 @@ Content-Type: application/json
 
 }
 
+###
+POST {{url}}/connectToDb
+Content-Type: application/json
 
+{
+
+}
