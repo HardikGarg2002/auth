@@ -1,0 +1,22 @@
+@url = http://localhost:6097
+@id = 66293c236cbfd52dc1912e65
+
+GET {{url}}
+
+###
+POST {{url}}/auth/signup
+Content-Type: application/json
+
+{
+    "password":"abcdef",
+    "email":"hardikgarg885@gmail.com"
+
+}
+
+###
+POST {{url}}/connectToDb
+Content-Type: application/json
+
+{
+
+}
