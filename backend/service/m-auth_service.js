@@ -53,3 +53,27 @@ export async function otpSignupSignin(user) {
   const token = await signIn(user);
   return token;
 }
+
+export async function saveOTP(mobile, otp) {
+  await User.updateOne({ mobile: mobile }, { otp: otp });
+}
+
+export async function verifyOTP(mobile, otp) {
+  const existingUser = await getUser({ mobile });
+  if (existingUser.otp !== otp) throw new Error("otp is incorrect");
+  return true;
+}
+
+export async function sendOtpToPhone(phoneNumber, otp) {
+  // send otp through sms via twilio
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
+  const client = require("twilio")(accountSid, authToken);
+  client.messages
+    .create({
+      body: `Your otp is ${otp}`,
+      from: "+919215503085",
+      to: phoneNumber,
+    })
+    .then((message) => console.log(message.sid));
+}

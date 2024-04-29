@@ -14,7 +14,7 @@ export async function signup(req, res, next) {
 export async function passSignin(req, res, next) {
   try {
     const { mobile, password } = req.body;
-    const token = await m_authController.signin(mobile, password);
+    const token = await m_authController.passSignin(mobile, password);
     res.status(201).json({ message: "user logged in succesfully", token });
   } catch (err) {
     next(err);
@@ -23,7 +23,7 @@ export async function passSignin(req, res, next) {
 export async function otpSignin(req, res, next) {
   try {
     const { mobile, otp } = req.body;
-    const token = await m_authController.signin(mobile, otp);
+    const token = await m_authController.otpSignin(mobile, otp);
     res.status(201).json({ message: "user logged in succesfully", token });
   } catch (err) {
     next(err);
