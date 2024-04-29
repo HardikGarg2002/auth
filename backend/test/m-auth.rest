@@ -1,15 +1,15 @@
 @url = http://localhost:6097
-@id = 66293c236cbfd52dc1912e65
+@id = 662fd293911438e972d27c96
 
 GET {{url}}
 
 ###
-POST {{url}}/auth/signup
+POST {{url}}/mauth/signup
 Content-Type: application/json
 
 {
     "password":"abcdef",
-    "email":"hardikgarg885@gmail.com"
+    "mobile":"9215503085"
 
 }
 
