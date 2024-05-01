@@ -28,8 +28,8 @@ export async function otpSignupSignin(user) {
 export async function generateOtp(mobile) {
   const otp = Math.floor(Math.random() * 1000000);
   // send otp through sms via twilio
-  
-  sendOtpToPhone(phoneNumber,otp);
+
+  await m_authService.sendOtpToPhone(mobile, otp);
 
   await m_authService.saveOTP(mobile, otp);
   //   return otp;

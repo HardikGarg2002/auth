@@ -1,5 +1,6 @@
 import { createUser, loginOrLogout, getUser } from "../utils/userDB.js";
 import { hashPassword } from "./base_service.js";
+import twilio from "twilio";
 
 export async function signup(mobile, password) {
   if (password) {
@@ -68,12 +69,18 @@ export async function sendOtpToPhone(phoneNumber, otp) {
   // send otp through sms via twilio
   const accountSid = process.env.TWILIO_ACCOUNT_SID;
   const authToken = process.env.TWILIO_AUTH_TOKEN;
-  const client = require("twilio")(accountSid, authToken);
-  client.messages
-    .create({
-      body: `Your otp is ${otp}`,
-      from: "+919215503085",
-      to: phoneNumber,
-    })
-    .then((message) => console.log(message.sid));
+  const client = twilio(accountSid, authToken);
+  
+  // client.messages
+  //   .create({
+  //     body: `Your otp is ${otp}`,
+  //     from: "+919215503085",
+  //     to: phoneNumber,
+  //   })
+  //   .then((message) => console.log(message.sid));
+
+  client.verify.v2
+    .services("VAab0c6a694ce969ec2d395df3b7506fcc")
+    .verifications.create({ to: "+919215503085", channel: "sms" })
+    .then((verification) => console.log(verification.sid));
 }

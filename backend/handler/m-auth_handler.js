@@ -54,7 +54,7 @@ export async function verifyOtp(req, res, next) {
 
 export async function generateOtp(req, res, next) {
   try {
-    const { mobile } = req.body;
+    const { mobile } = req.params;
     const otp = await m_authController.generateOtp(mobile);
     res.send(otp);
   } catch (err) {
