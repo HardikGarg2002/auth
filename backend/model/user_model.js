@@ -13,7 +13,7 @@ const authUserSchema = new Schema({
   },
   password: {
     type: String,
-    trim: true
+    trim: true,
   },
   email: {
     type: String,
@@ -28,9 +28,45 @@ const authUserSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  is_verified: {
-    type: Boolean,
-    default: false,
+  verified: {
+    email: {
+      type: Boolean,
+      default: false,
+    },
+    mobile: {
+      type: Boolean,
+      default: false,
+    },
+    google: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  required_verification: [
+    {
+      type: String,
+      enum: ["email", "mobile", "google"],
+    },
+  ],
+  otps: {
+    email: {
+      otp: {
+        type: Number,
+        default: null,
+      },
+      expiry: {
+        type: Date,
+        default: null,
+      },
+    },
+    otp: {
+      type: Number,
+      default: null,
+    },
+    expiry: {
+      type: Date,
+      default: null,
+    },
   },
   is_deleted: {
     type: Boolean,
@@ -53,10 +89,6 @@ const authUserSchema = new Schema({
   },
   token: {
     type: String,
-    default: null,
-  },
-  otp: {
-    type: Number,
     default: null,
   },
 });
