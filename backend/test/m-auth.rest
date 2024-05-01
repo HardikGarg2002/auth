@@ -20,3 +20,6 @@ Content-Type: application/json
 {
 
 }
+
+###
+GET {{url}}/mauth/otp/9215503085

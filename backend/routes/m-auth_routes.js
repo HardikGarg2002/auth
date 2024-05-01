@@ -8,7 +8,7 @@ router.post("/psignin", moHandler.passSignin);
 
 router.post("/osignin", moHandler.otpSignin);
 
-router.post("/requestOtp", moHandler.generateOtp);
+router.get("/otp/:mobile", moHandler.generateOtp);
 
 router.post("/verifyOtp", moHandler.verifyOtp);
 
