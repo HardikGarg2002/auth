@@ -12,12 +12,12 @@ export const getGoogleOAuthUrl = (req, res, next) => {
   }
 };
 
-export const signin = async (req, res, next) => {
-  const { code, gtoken } = req.query;
-  try {
-    const result = await authGoogleController.signin(code, gtoken);
-    res.status(200).json(result);
-  } catch (error) {
-    next(error);
-  }
-};
+// export const signin = async (req, res, next) => {
+//   const { code, gtoken } = req.query;
+//   try {
+//     const result = await authGoogleController.signin(code, gtoken);
+//     res.status(200).json(result);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
